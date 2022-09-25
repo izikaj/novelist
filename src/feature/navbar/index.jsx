@@ -1,22 +1,25 @@
 import Icon from '../../shared/Icon';
 import Bookmark from './Bookmark';
 import Auth from './Auth';
+import { useNavbar } from '../../signal/navbar';
 
 import settingsRawSvg from '../../assets/settings.svg?raw';
 
 function NavBar() {
-  const hidden = Math.random() < 0.5;
-  const rootCSS = `
-    navbar bg-base-100 fixed top-0 shadow shadow-neutral-focus
-    right-0 z-10 transition-transform
-    ${hidden ? 'translate-y-[-100%]' : 'translate-y-0'}"
-  `;
+  const opts = useNavbar();
+  const styles = {
+    transform: `translate3d(0, ${opts.collapse ? '-100%' : '0'}, 0)`
+  }
   return (
     <>
       <div className="navbar opacity-0"></div>
-      <div className={rootCSS}>
+      <div
+        className="navbar bg-base-100 fixed shadow shadow-neutral-focus
+                   top-0 right-0 z-10 transition-transform"
+        style={styles}
+      >
         <div className="flex-1">
-          <Auth/>
+          <Auth />
         </div>
 
         <div className="flex-none gap-2">

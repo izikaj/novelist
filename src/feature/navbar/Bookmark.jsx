@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useNavbar } from '../../signal/navbar';
 import { useBook } from '../../signal/book';
 import { useBook as useBookmark } from '../../signal/user/book';
 import { update } from '../../api/user/books';
@@ -34,6 +34,7 @@ const DropContent = (book, saved) => {
 function Bookmark() {
   const saved = useBookmark();
   const book = useBook();
+  const opts = useNavbar();
   if (!saved) return '';
 
   const bookmarked = saved.state > 0 && saved.state < 9;
@@ -41,14 +42,17 @@ function Bookmark() {
   return (
     <>
       <div className="dropdown dropdown-end">
-        <button tabIndex="0" className="btn btn-ghost btn-circle">
+        <button
+          tabIndex={opts.collapse ? '-1' : '0'}
+          className="btn btn-ghost btn-circle"
+        >
           <Icon
             className="w-10 rounded-full"
             raw={bookmarked ? bookmarkRawSvg : bookmarkOffRawSvg}
           />
         </button>
         <ul
-          tabIndex="0"
+          tabIndex={opts.collapse ? '-1' : '0'}
           className="dropdown-content menu p-2 bg-base-200 rounded-box shadow-md"
         >
           {DropContent(book, saved)}

@@ -10,7 +10,7 @@ function Layout() {
       <NavBar />
       <Outlet/>
 
-      <p className="mt-10 text-center text-neutral">
+      <p className="mt-10 text-center text-base-content opacity-40">
         Just for fun, not for commercial use
       </p>
 

@@ -6,7 +6,7 @@ const NS = ' -- WATCH:BOOK -- ';
 const BLANK = { state: 0, rate: 0, $blank: true };
 
 function $build() {
-  console.log('<<<<< WATCH:BOOK : BUILD');
+  // console.log('<<<<< WATCH:BOOK : BUILD');
   let lastRef;
 
   function $unsubscribe() {
@@ -22,7 +22,7 @@ function $build() {
     const uid = auth.currentUser.uid;
     lastRef = ref(database, `${uid}/books/${id}`);
     onValue(lastRef, (snap) => {
-      console.log('<<<<< WATCH:BOOK : ON VALUE', id, ':', snap.val());
+      // console.log('<<<<< WATCH:BOOK : ON VALUE', id, ':', snap.val());
       setBook(snap.val() || BLANK);
     });
   }

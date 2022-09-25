@@ -7,6 +7,7 @@ import { user$ } from '../signal/user';
 import { combineLatest } from 'rxjs';
 import watchBook from './watch/book';
 import watchChapter from './watch/chapter';
+import watchScroll from './watch/scroll';
 
 const BG_NS = ' -- BACKGROUND -- ';
 
@@ -15,14 +16,17 @@ function $start() {
   onAuthStateChanged(auth, setUser);
 
   combineLatest({ user$, book$ }).subscribe(({ book$: book, user$: user }) => {
-    // console.warn('<<<< BOOK', 'book:', book, 'user:', user);
     watchBook(user && book && book.id);
   });
 
   combineLatest({ user$, chapter$ }).subscribe(({ chapter$: chapter, user$: user }) => {
-    // console.warn('<<<< CHAPTER', 'chapter:', chapter, 'user:', user);
     if (!(user && chapter)) return watchChapter();
+
     watchChapter(chapter.book.id, chapter.id);
+  });
+
+  chapter$.subscribe((chapter) => {
+    watchScroll(chapter !== null);
   });
 
   return this;
