@@ -1,14 +1,18 @@
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
-import { state, useStateObservable } from '@react-rxjs/core';
+import {
+  BehaviorSubject, distinctUntilChanged, combineLatest, auditTime
+} from 'rxjs';
+// import { state, useStateObservable } from '@react-rxjs/core';
 
-const initial = {
-  read: 0,
-  scroll: 0,
+export const scroll$ = new BehaviorSubject(0).pipe(distinctUntilChanged());
+export const read$ = new BehaviorSubject(0).pipe(distinctUntilChanged());
+const combined = combineLatest({ scroll: scroll$, read: read$ });
+
+combined.subscribe(({ scroll: sy, read: ry }) => {
+  if (sy > ry) read$.next(sy);
+});
+
+export const progress$ = combined.pipe(auditTime(100));
+export const reset = () => {
+  scroll$.next(0);
+  read$.next(0);
 };
-
-const entry = new BehaviorSubject(initial).pipe(distinctUntilChanged());
-export const progress$ = state(entry, initial);
-export const useProgress = () => useStateObservable(progress$);
-export const setProgress = (value) => entry.next(value);
-
-export default entry;

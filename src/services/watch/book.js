@@ -1,5 +1,8 @@
+import { combineLatest } from 'rxjs';
 import { database, auth } from '../firebase';
 import { ref, onValue, off } from 'firebase/database';
+import { book$ } from '../../signal/book';
+import { user$ } from '../../signal/user';
 import { setBook } from '../../signal/user/book';
 
 const NS = ' -- WATCH:BOOK -- ';
@@ -7,7 +10,7 @@ const BLANK = { state: 0, rate: 0, $blank: true };
 
 function $build() {
   // console.log('<<<<< WATCH:BOOK : BUILD');
-  let lastRef;
+  let lastRef, $sub;
 
   function $unsubscribe() {
     if (!lastRef) return;
@@ -15,19 +18,41 @@ function $build() {
     lastRef = undefined;
   }
 
-  function $subscribe(id) {
+  function $subscribe(book) {
     if (lastRef) $unsubscribe();
-    if (!(auth.currentUser && id)) return setBook(null);
+    if (!(auth.currentUser && book)) return setBook(null);
+    const common = {
+      id: book.id,
+    };
 
-    const uid = auth.currentUser.uid;
-    lastRef = ref(database, `${uid}/books/${id}`);
+    lastRef = ref(database, `${auth.currentUser.uid}/books/${book.id}`);
     onValue(lastRef, (snap) => {
-      // console.log('<<<<< WATCH:BOOK : ON VALUE', id, ':', snap.val());
-      setBook(snap.val() || BLANK);
+      if (snap.exists()) return setBook({ ...common, ...snap.val() });
+
+      setBook({
+        ...BLANK,
+        ...common,
+        title: book.title
+      });
     });
   }
 
-  return $subscribe;
+  function $stop() {
+    if ($sub) $sub.unsubscribe();
+    $subscribe(null);
+    $sub = undefined;
+  }
+
+  function $start(enable = true) {
+    $stop();
+    if (!enable) return;
+
+    $sub = combineLatest({ user$, book$ }).subscribe(({ book$: book, user$: user }) => {
+      $subscribe(user ? book : null);
+    });
+  }
+
+  return $start;
 }
 
 const $watch = window[NS] || (window[NS] = $build());

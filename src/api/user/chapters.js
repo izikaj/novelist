@@ -4,8 +4,7 @@ import isPresent from '../../shared/isPresent';
 
 export function all(bookId) {
   if (!auth.currentUser) return Promise.reject('unauthorized');
-  const uid = auth.currentUser.uid;
-  return get(ref(database, `${uid}/chapters/${bookId}`)).then(function (result) {
+  return get(ref(database, `${auth.currentUser.uid}/chapters/${bookId}`)).then(function (result) {
     return result.val();
   });
 }
