@@ -1,9 +1,7 @@
-import Icon from '../../shared/Icon';
 import Bookmark from './Bookmark';
 import Auth from './Auth';
+import Setting from './Setting';
 import { useNavbar } from '../../signal/navbar';
-
-import settingsRawSvg from '../../assets/settings.svg?raw';
 
 function NavBar() {
   const opts = useNavbar();
@@ -24,9 +22,7 @@ function NavBar() {
 
         <div className="flex-none gap-2">
           <Bookmark />
-          <button type="button" className="btn btn-ghost btn-circle">
-            <Icon className="w-8 rounded-full" raw={settingsRawSvg} />
-          </button>
+          <Setting />
         </div>
       </div>
     </>

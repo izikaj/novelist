@@ -2,12 +2,14 @@ import { useEffect } from 'react';
 import SignIn from '../auth/SignIn';
 import SignUp from '../auth/SignUp';
 import Remind from '../auth/Remind';
+import Settings from '../settings';
 import { usePopup, setPopup } from '../../signal/popup';
 import { user$ } from '../../signal/user';
 
 export const SIGN_IN = 'signin';
 export const SIGN_UP = 'signup';
 export const REMIND = 'remind';
+export const SETTINGS = 'settings';
 
 const UNAUTHORIZED_TYPES = [
   SIGN_IN, SIGN_UP
@@ -42,6 +44,8 @@ function Popups() {
       return <SignUp {...opts} />;
     case REMIND:
       return <Remind {...opts} />;
+    case SETTINGS:
+      return <Settings onClose={onClose} />;
   }
   return '';
 }

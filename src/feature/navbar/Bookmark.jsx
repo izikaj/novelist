@@ -5,6 +5,9 @@ import { update } from '../../api/user/books';
 import BookState from '../../shared/BookState';
 import Icon from '../../shared/Icon';
 
+import { setPopup } from '../../signal/popup';
+import { SIGN_IN } from '../popups/Popups';
+
 import bookmarkRawSvg from '../../assets/bookmark.svg?raw';
 import bookmarkOffRawSvg from '../../assets/bookmark-off.svg?raw';
 
@@ -31,11 +34,30 @@ const DropContent = (book, saved) => {
   })
 }
 
+const MarkIcon = ({ active }) => {
+  return (
+    <Icon
+      className="w-10 rounded-full"
+      raw={active ? bookmarkRawSvg : bookmarkOffRawSvg}
+    />
+  );
+}
+
+const DisabledMark = ({ opts }) => {
+  return (
+    <button
+      tabIndex={opts.collapse ? '-1' : '0'}
+      className="btn btn-ghost btn-circle"
+      onClick={() => setPopup(SIGN_IN)}
+    ><MarkIcon active={false} /></button>
+  );
+}
+
 function Bookmark() {
   const saved = useBookmark();
   const book = useBook();
   const opts = useNavbar();
-  if (!saved) return '';
+  if (!saved) return <DisabledMark opts={opts} />;
 
   const bookmarked = saved.state > 0 && saved.state < 9;
 
@@ -45,12 +67,7 @@ function Bookmark() {
         <button
           tabIndex={opts.collapse ? '-1' : '0'}
           className="btn btn-ghost btn-circle"
-        >
-          <Icon
-            className="w-10 rounded-full"
-            raw={bookmarked ? bookmarkRawSvg : bookmarkOffRawSvg}
-          />
-        </button>
+        ><MarkIcon active={bookmarked} /></button>
         <ul
           tabIndex={opts.collapse ? '-1' : '0'}
           className="dropdown-content menu p-2 bg-base-200 rounded-box shadow-md"
