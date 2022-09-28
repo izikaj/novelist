@@ -5,7 +5,7 @@ const API_ASSET_NS = ' -- API:assetUrl -- ';
 
 function $build() {
   const chacheURL = {};
-  console.warn('BUILD API:assetUrl');
+  // console.warn('BUILD API:assetUrl');
 
   return (path) => {
     if (chacheURL[path]) return Promise.resolve(chacheURL[path]);

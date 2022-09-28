@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
 import Pagination from './Pagination';
 import Content from './Content';
+import Progress from './Progress';
 
 function View() {
   const chapter = useLoaderData();
@@ -9,6 +10,7 @@ function View() {
 
   return (
     <>
+      <Progress />
       <main className="chapter md:container md:mx-auto px-1 md:px-0">
         <Breadcrumbs book={book} chapter={chapter} />
         <Content chapter={chapter} />

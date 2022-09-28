@@ -4,7 +4,7 @@ import { read$ } from '../../signal/progress';
 import { update } from '../../api/user/chapters';
 
 const NS = ' -- WATCH:SYNC_PROGRESS -- ';
-const TIMEOUT = 5000;
+const TIMEOUT = 3000;
 
 const commit = (saved) => {
   return update(saved.bookId, saved.id, {
@@ -15,7 +15,7 @@ const commit = (saved) => {
 }
 
 function $build() {
-  console.log('<<<<< WATCH:SYNC_PROGRESS : BUILD');
+  // console.log('<<<<< WATCH:SYNC_PROGRESS : BUILD');
   let $sub;
   const query = combineLatest({ chapter$, read$ }).pipe(auditTime(TIMEOUT));
 

@@ -15,14 +15,10 @@ const quesTheme = () => {
 }
 
 function $build() {
-  console.log('<<<<< WATCH:SYNC_PROGRESS : BUILD');
+  // console.log('<<<<< WATCH:SETTINGS : BUILD');
   let $sub;
 
-  show().then(opts => {
-    console.log('SETTINGS LOAD SUCCESS', opts);
-    setData(opts);
-  }).catch(err => {
-    console.log('SETTINGS LOAD ERROR', err);
+  show().then(opts => setData(opts)).catch(_err => {
     setData({
       theme: quesTheme(),
       fontSize: 120,

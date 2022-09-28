@@ -11,7 +11,7 @@ import watchSettings from './watch/settings';
 const BG_NS = ' -- BACKGROUND -- ';
 
 function $start() {
-  console.warn('BUILD BACKGROUND');
+  // console.warn('BUILD BACKGROUND');
   onAuthStateChanged(auth, setUser);
 
   watchBook();

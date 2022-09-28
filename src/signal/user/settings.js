@@ -10,7 +10,6 @@ export const setData = (value) => entry.next(value);
 const $$cache = {};
 
 const buildFiltered = (key, initial) => {
-  console.log('buildFilteredState', key, initial);
   const filtered = state(
     entry.pipe(map(v => v && v[key])).pipe(distinctUntilChanged()),
     initial
