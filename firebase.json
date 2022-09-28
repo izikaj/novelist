@@ -12,5 +12,34 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "ui": {
+    "enabled": true,
+    "host": "localhost",
+    "port": 4000
+  },
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "storage": {
+      "port": 9199
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "database": {
+      "port": 9000
+    }
   }
 }

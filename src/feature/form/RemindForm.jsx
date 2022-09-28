@@ -1,21 +1,25 @@
-import { auth } from '../../services/firebase';
-import { sendPasswordResetEmail } from 'firebase/auth';
+import { useState } from 'react';
+import remindPass from '../../api/auth/remind';
+import FieldError from './FieldError';
+import { ShowAlert } from '../../signal/popup';
 
 function RemindForm({ toSignIn }) {
+  const [errors, setErrors] = useState({});
   const remind = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
 
     const email = evt.target.email.value;
-    console.warn(email);
-    const opts = {
-      url: `${window.location.origin}/`
-    };
 
-    sendPasswordResetEmail(auth, email, opts).then(() => {
-      console.warn('sendPasswordResetEmail SENT!!!!');
-    }).catch((error) => {
-      console.warn('sendPasswordResetEmail error', error);
+    remindPass({ email }).then((data) => {
+      console.log('AUTH SUCCESS', data);
+      ShowAlert({
+        title: 'Success',
+        text: 'Reset password instructions successfully sent to your email'
+      });
+    }).catch((err) => {
+      console.log('AUTH ERROR', err);
+      setErrors(err);
     });
   }
 
@@ -32,6 +36,7 @@ function RemindForm({ toSignIn }) {
               className="flex-none w-3/5 input input-sm input-bordered"
             />
           </label>
+          <FieldError message={errors.email} />
         </div>
       </div>
       <div className="flex gap-2 mt-4">
@@ -46,4 +51,4 @@ function RemindForm({ toSignIn }) {
   )
 }
 
-export default RemindForm
+export default RemindForm;

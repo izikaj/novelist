@@ -29,7 +29,7 @@ const toggleReadState = (book, chapter, isUnread = false) => {
   };
   update(book.id, chapter.id, data).then(() => {
     chapters$.next({ [chapter.id]: data });
-  });
+  }).catch(() => {});
 }
 
 // readed, reading, unread

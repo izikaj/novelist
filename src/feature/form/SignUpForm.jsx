@@ -1,26 +1,27 @@
-import { auth } from '../../services/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { setUser } from '../../signal/user';
-// import { useState } from 'react';
+import { useState } from 'react';
+import signUp from '../../api/auth/signUp';
+import FieldError from './FieldError';
+import { ShowAlert } from '../../signal/popup';
 
 function SignUpForm({ toSignIn }) {
+  const [errors, setErrors] = useState({});
   const register = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
 
     const email = evt.target.email.value;
     const password = evt.target.password.value;
-    console.warn(email, password);
+    const confirmation = evt.target.confirmation.value;
 
-    if (auth.currentUser) {
-      setUser(auth.currentUser);
-      return;
-    }
-
-    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      setUser(userCredential.user);
-    }).catch((error) => {
-      console.warn('error', error);
+    signUp({ email, password, confirmation }).then((data) => {
+      console.log('AUTH SUCCESS', data);
+      setErrors({});
+      ShowAlert({
+        title: 'Registration success!',
+      });
+    }).catch((err) => {
+      console.log('AUTH ERROR', err);
+      setErrors(err);
     });
   }
 
@@ -37,6 +38,7 @@ function SignUpForm({ toSignIn }) {
               className="flex-none w-3/5 input input-sm input-bordered"
             />
           </label>
+          <FieldError message={errors.email} />
         </div>
         <div className="form-control">
           <label className="input-group input-group-sm">
@@ -48,17 +50,19 @@ function SignUpForm({ toSignIn }) {
               className="flex-none w-3/5 input input-sm input-bordered"
             />
           </label>
+          <FieldError message={errors.password} />
         </div>
         <div className="form-control">
           <label className="input-group input-group-sm">
             <span className="flex-none w-2/5 justify-end">Confirm</span>
             <input
               type="password"
-              name="password_confirm"
+              name="confirmation"
               autoComplete="new-password"
               className="flex-none w-3/5 input input-sm input-bordered"
             />
           </label>
+          <FieldError message={errors.confirmation} />
         </div>
       </div>
       <div className="flex gap-2 mt-4">
@@ -71,4 +75,4 @@ function SignUpForm({ toSignIn }) {
   )
 }
 
-export default SignUpForm
+export default SignUpForm;

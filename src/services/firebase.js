@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
-import { getAuth } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
+import { getDatabase, connectDatabaseEmulator } from 'firebase/database';
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { getStorage, connectStorageEmulator } from 'firebase/storage';
 
 const APP_NS = ' -- APP -- ';
 const DB_NS = ' -- DB -- ';
@@ -26,3 +26,10 @@ export const app = (window[APP_NS] || (window[APP_NS] = $$setup()));
 export const database = (window[DB_NS] || (window[DB_NS] = getDatabase(app)));
 export const auth = (window[AUTH_NS] || (window[AUTH_NS] = getAuth(app)));
 export const storage = (window[STORE_NS] || (window[STORE_NS] = getStorage(app)));
+
+if (location.hostname === 'localhost') {
+  connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+  connectDatabaseEmulator(database, 'localhost', 9000, { disableWarnings: true });
+  connectStorageEmulator(storage, "localhost", 9199, { disableWarnings: true });
+  // disableWarnings: true
+}

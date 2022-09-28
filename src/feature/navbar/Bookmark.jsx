@@ -5,8 +5,7 @@ import { update } from '../../api/user/books';
 import BookState from '../../shared/BookState';
 import Icon from '../../shared/Icon';
 
-import { setPopup } from '../../signal/popup';
-import { SIGN_IN } from '../popups/Popups';
+import { setPopup, SIGN_IN } from '../../signal/popup';
 
 import bookmarkRawSvg from '../../assets/bookmark.svg?raw';
 import bookmarkOffRawSvg from '../../assets/bookmark-off.svg?raw';
@@ -48,7 +47,7 @@ const DisabledMark = ({ opts }) => {
     <button
       tabIndex={opts.collapse ? '-1' : '0'}
       className="btn btn-ghost btn-circle"
-      onClick={() => setPopup(SIGN_IN)}
+      onClick={() => setPopup({ type: SIGN_IN })}
     ><MarkIcon active={false} /></button>
   );
 }

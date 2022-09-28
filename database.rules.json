@@ -1,0 +1,50 @@
+{
+  "rules": {
+    ".read": "false",
+    ".write": "false",
+    "$uid": {
+      ".read": "$uid === auth.uid",
+      ".write": "$uid === auth.uid",
+      "books": {
+        "id": {
+          ".validate": "newData.exists()"
+        },
+        "title": {
+          ".validate": "newData.exists() && newData.val().length > 0 && newData.val().length < 256"
+        },
+        "state": {
+          ".validate": "newData.val() >= 0 && newData.val() < 10"
+        },
+        "rate": {
+          ".validate": "newData.val() >= 0 && newData.val() <= 10"
+        },
+        "resumeId": {
+          ".validate": "newData.exists()"
+        },
+        "resumeTitle": {
+          ".validate": "newData.val().length < 256"
+        }
+      },
+      "chapters": {
+        "progress": {
+          ".validate": "newData.val() >= 0 && newData.val() <= 100"
+        },
+        "digest": {
+          ".validate": "newData.val().length < 128"
+        }
+      }
+    },
+    "books": {
+      ".read": "true",
+      ".write": "root.child('role').child(auth.uid).val() === 'admin'"
+    },
+    "chapters": {
+      ".read": "true",
+      ".write": "root.child('role').child(auth.uid).val() === 'admin'"
+    },
+    "role": {
+      ".read": "root.child('role').child(auth.uid).val() === 'admin'",
+      ".write": "false"
+    }
+  }
+}

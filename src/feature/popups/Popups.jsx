@@ -3,13 +3,20 @@ import SignIn from '../auth/SignIn';
 import SignUp from '../auth/SignUp';
 import Remind from '../auth/Remind';
 import Settings from '../settings';
-import { usePopup, setPopup } from '../../signal/popup';
+import Alert from './Alert';
+import {
+  usePopup, setPopup,
+  SIGN_IN, SIGN_UP, REMIND, SETTINGS, ALERT
+} from '../../signal/popup';
 import { user$ } from '../../signal/user';
 
-export const SIGN_IN = 'signin';
-export const SIGN_UP = 'signup';
-export const REMIND = 'remind';
-export const SETTINGS = 'settings';
+export {
+  SIGN_IN,
+  SIGN_UP,
+  REMIND,
+  SETTINGS,
+  ALERT,
+};
 
 const UNAUTHORIZED_TYPES = [
   SIGN_IN, SIGN_UP
@@ -19,25 +26,29 @@ function Popups() {
   const popup = usePopup();
 
   useEffect(function () {
-    const sub = user$.subscribe(function(user) {
-      if (user && UNAUTHORIZED_TYPES.includes(popup)) setPopup('');
+    const sub = user$.subscribe(function (user) {
+      if (user && UNAUTHORIZED_TYPES.includes(popup && popup.type)) setPopup(null);
     });
     return () => sub.unsubscribe();
   })
 
   const onClose = () => {
     console.debug('ON CLOSE', popup);
-    setPopup('');
+    if (typeof popup.callback === 'function') popup.callback(popup);
+    setPopup(null);
   }
 
   const opts = {
+    popup,
     onClose,
-    toSignIn: () => setPopup(SIGN_IN),
-    toSignUp: () => setPopup(SIGN_UP),
-    toRemind: () => setPopup(REMIND),
+    toSignIn: () => setPopup({ type: SIGN_IN }),
+    toSignUp: () => setPopup({ type: SIGN_UP }),
+    toRemind: () => setPopup({ type: REMIND }),
   }
 
-  switch (popup) {
+  switch (popup && popup.type) {
+    case ALERT:
+      return <Alert popup={popup} onClose={onClose} />;
     case SIGN_IN:
       return <SignIn {...opts} />;
     case SIGN_UP:

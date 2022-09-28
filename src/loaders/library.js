@@ -16,7 +16,7 @@ export async function loader() {
   return await all().then(books => {
     setLibrary(books);
     return books;
-  });
+  }).catch(_err => []);
 }
 
 export default (opts) => {

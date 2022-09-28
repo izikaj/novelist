@@ -4,7 +4,7 @@ import isPresent from '../shared/isPresent';
 
 export function all() {
   return get(ref(database, 'books')).then(function (result) {
-    const books = Object.values(result.val());
+    const books = Object.values(result.val() || {});
     return books;
   });
 }

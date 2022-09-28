@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useUser } from '../../signal/user';
-import { setPopup } from '../../signal/popup';
+import { setPopup, SIGN_IN } from '../../signal/popup';
 import Icon from '../../shared/Icon';
 
 import { auth } from '../../services/firebase';
@@ -14,7 +14,7 @@ function asyncAction(user) {
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      setPopup('signin');
+      setPopup({ type: SIGN_IN });
       setTimeout(resolve, 5000);
     }, 1);
   });

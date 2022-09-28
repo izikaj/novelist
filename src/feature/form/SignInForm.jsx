@@ -1,25 +1,22 @@
-import { auth } from '../../services/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { setUser } from '../../signal/user';
+import { useState } from 'react';
+import signIn from '../../api/auth/signIn';
+import FieldError from './FieldError';
 
 function LogInForm({ toRemind }) {
+  const [errors, setErrors] = useState({});
   const login = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
 
     const email = evt.target.email.value;
     const password = evt.target.password.value;
-    console.warn(email, password);
 
-    if (auth.currentUser) {
-      setUser(auth.currentUser);
-      return;
-    }
-
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      setUser(userCredential.user);
-    }).catch((error) => {
-      console.warn('error', error);
+    signIn({ email, password }).then((data) => {
+      console.log('AUTH SUCCESS', data);
+      setErrors({});
+    }).catch((err) => {
+      console.log('AUTH ERROR', err);
+      setErrors(err);
     });
   }
 
@@ -36,9 +33,7 @@ function LogInForm({ toRemind }) {
               className="flex-none w-3/5 input input-sm input-bordered"
             />
           </label>
-          <span
-            className="validation-error pl-[40%] text-xs text-error"
-          >Some error</span>
+          <FieldError message={errors.email} />
         </div>
         <div className="form-control">
           <label className="input-group input-group-sm">
@@ -50,6 +45,7 @@ function LogInForm({ toRemind }) {
               className="flex-none w-3/5 input input-sm input-bordered"
             />
           </label>
+          <FieldError message={errors.password} />
         </div>
       </div>
       <div className="flex gap-2 mt-4">
@@ -62,4 +58,4 @@ function LogInForm({ toRemind }) {
   )
 }
 
-export default LogInForm
+export default LogInForm;
