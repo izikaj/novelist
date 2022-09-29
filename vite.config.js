@@ -18,7 +18,6 @@ export default defineConfig({
             'react', 'react-router-dom', 'react-dom', 'rxjs',
             'date-fns', 'underscore',
           ],
-          firebase: ['firebase', '@firebase']
         },
       },
     },
