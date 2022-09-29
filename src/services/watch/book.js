@@ -1,32 +1,42 @@
 import { combineLatest } from 'rxjs';
 import { database, auth } from '../firebase';
-import { ref, onValue, off } from 'firebase/database';
+import {
+  ref, off, onValue,
+  onChildAdded, onChildChanged, onChildRemoved
+} from 'firebase/database';
 import { book$ } from '../../signal/book';
 import { user$ } from '../../signal/user';
 import { setBook } from '../../signal/user/book';
+import { setData as setChaptersData } from '../../signal/user/chapters';
 
 const NS = ' -- WATCH:BOOK -- ';
 const BLANK = { state: 0, rate: 0, $blank: true };
 
 function $build() {
   // console.log('<<<<< WATCH:BOOK : BUILD');
-  let lastRef, $sub;
+  let bookRef, chaptersRef, $sub;
 
   function $unsubscribe() {
-    if (!lastRef) return;
-    off(lastRef);
-    lastRef = undefined;
+    if (bookRef) off(bookRef);
+    if (chaptersRef) off(chaptersRef);
+    bookRef = undefined;
+    chaptersRef = undefined;
   }
 
   function $subscribe(book) {
-    if (lastRef) $unsubscribe();
-    if (!(auth.currentUser && book)) return setBook(null);
+    if (bookRef) $unsubscribe();
+    if (!(auth.currentUser && book)) {
+      setChaptersData('clear!');
+      return setBook(null);
+    }
     const common = {
       id: book.id,
     };
 
-    lastRef = ref(database, `${auth.currentUser.uid}/books/${book.id}`);
-    onValue(lastRef, (snap) => {
+    bookRef = ref(database, `${auth.currentUser.uid}/books/${book.id}`);
+    chaptersRef = ref(database, `${auth.currentUser.uid}/chapters/${book.id}`);
+
+    onValue(bookRef, (snap) => {
       if (snap.exists()) return setBook({ ...common, ...snap.val() });
 
       setBook({
@@ -34,6 +44,18 @@ function $build() {
         ...common,
         title: book.title
       });
+    });
+
+    onChildAdded(chaptersRef, (data) => {
+      setChaptersData({ [data.key]: data.val() });
+    });
+
+    onChildChanged(chaptersRef, (data) => {
+      setChaptersData({ [data.key]: data.val() });
+    });
+
+    onChildRemoved(chaptersRef, (data) => {
+      setChaptersData({ [data.key]: { progress: 0 } });
     });
   }
 

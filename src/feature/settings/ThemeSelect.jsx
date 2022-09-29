@@ -1,6 +1,5 @@
-import Icon from '../../shared/Icon';
-import bookmarkRawSvg from '../../assets/bookmark.svg?raw';
 import { setData, useKeyData } from '../../signal/user/settings'
+import { ReactComponent as BookmarkIcon } from '../../assets/bookmark.svg';
 
 const THEMES = [
   'light', 'dark', 'cupcake', 'bumblebee', 'emerald', 'corporate',
@@ -37,7 +36,7 @@ const Item = ({ theme, value }) => {
   `;
   return (
     <div onClick={updateTheme} className={css} data-value={theme}>
-      {isActive ? <Icon className="absolute top-[-5px] left-2 w-4" raw={bookmarkRawSvg} /> : ''}
+      {isActive ? <BookmarkIcon className="absolute top-[-5px] left-2 w-4" /> : ''}
       <div
         className="bg-base-100 text-base-content hover:bg-base-200 flex-1 font-sans pointer-events-none"
         data-theme={theme}

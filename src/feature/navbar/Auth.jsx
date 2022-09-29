@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { useUser } from '../../signal/user';
 import { setPopup, SIGN_IN } from '../../signal/popup';
-import Icon from '../../shared/Icon';
-
 import { auth } from '../../services/firebase';
 import { signOut } from 'firebase/auth';
 
-import userRawSvg from '../../assets/user.svg?raw';
-import exitRawSvg from '../../assets/exit.svg?raw';
+import { ReactComponent as UserIcon } from '../../assets/user.svg';
+import { ReactComponent as ExitIcon } from '../../assets/exit.svg';
 
 function asyncAction(user) {
   if (user) return signOut(auth);
@@ -24,7 +22,7 @@ function Auth() {
   const [loading, setLoading] = useState(false);
   const user = useUser();
   const title = user ? 'Log Out' : 'Log In';
-  const rawIcon = user ? exitRawSvg : userRawSvg;
+  const Icon = user ? ExitIcon : UserIcon;
   const action = () => {
     if (loading) return;
 
@@ -40,7 +38,7 @@ function Auth() {
         className={btnCSS}
         onClick={action}
       >
-        <Icon className="w-6 rounded-full" raw={rawIcon} />
+        <div className="w-6 rounded-full"><Icon /></div>
       </button>
     </>
   )

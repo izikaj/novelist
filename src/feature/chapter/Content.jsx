@@ -1,4 +1,5 @@
 import { useData } from '../../signal/user/settings';
+import RestoreScroll from './RestoreScroll';
 
 function Content({ chapter }) {
   const opts = useData();
@@ -15,6 +16,7 @@ function Content({ chapter }) {
         className="max-w-[98vw]"
         dangerouslySetInnerHTML={{ __html: chapter.content }}
       />
+      <RestoreScroll />
     </article>
   );
 }

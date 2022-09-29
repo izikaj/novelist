@@ -1,14 +1,13 @@
 import { useNavbar } from '../../signal/navbar';
+import { useUser } from '../../signal/user';
 import { useBook } from '../../signal/book';
 import { useBook as useBookmark } from '../../signal/user/book';
 import { update } from '../../api/user/books';
-import BookState from '../../shared/BookState';
-import Icon from '../../shared/Icon';
-
 import { setPopup, SIGN_IN } from '../../signal/popup';
+import BookState from '../../shared/BookState';
 
-import bookmarkRawSvg from '../../assets/bookmark.svg?raw';
-import bookmarkOffRawSvg from '../../assets/bookmark-off.svg?raw';
+import { ReactComponent as BookmarkIcon } from '../../assets/bookmark.svg';
+import { ReactComponent as BookmarkOffIcon } from '../../assets/bookmark-off.svg';
 
 const setNovelState = (book, saved, state) => {
   const savestate = { state };
@@ -34,12 +33,8 @@ const DropContent = (book, saved) => {
 }
 
 const MarkIcon = ({ active }) => {
-  return (
-    <Icon
-      className="w-10 rounded-full"
-      raw={active ? bookmarkRawSvg : bookmarkOffRawSvg}
-    />
-  );
+  const Icon = active ? BookmarkIcon : BookmarkOffIcon;
+  return <Icon className="w-8 rounded-full" />;
 }
 
 const DisabledMark = ({ opts }) => {
@@ -53,10 +48,14 @@ const DisabledMark = ({ opts }) => {
 }
 
 function Bookmark() {
-  const saved = useBookmark();
   const book = useBook();
+  const user = useUser();
   const opts = useNavbar();
-  if (!saved) return <DisabledMark opts={opts} />;
+  const saved = useBookmark() || {state: 0};
+
+  if (!book) return '';
+  if (!user) return <DisabledMark opts={opts} />;
+  if (!saved) return '';
 
   const bookmarked = saved.state > 0 && saved.state < 9;
 

@@ -1,8 +1,6 @@
 import { useNavbar } from '../../signal/navbar';
 import { setPopup, SETTINGS } from '../../signal/popup';
-import Icon from '../../shared/Icon';
-
-import settingsRawSvg from '../../assets/settings.svg?raw';
+import { ReactComponent as SettingsIcon } from '../../assets/settings.svg';
 
 function Bookmark() {
   const opts = useNavbar();
@@ -15,7 +13,7 @@ function Bookmark() {
         className="btn btn-ghost btn-circle"
         onClick={() => setPopup({ type: SETTINGS })}
       >
-        <Icon className="w-8 rounded-full" raw={settingsRawSvg} />
+        <SettingsIcon className="w-6 rounded-full" />
       </button>
     </>
   )

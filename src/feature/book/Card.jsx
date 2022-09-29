@@ -1,4 +1,5 @@
 import Image from '../../shared/Image';
+import Date from '../../shared/Date';
 
 function Card({book}) {
   return (
@@ -22,7 +23,7 @@ function Card({book}) {
           </div>
           <div className="flex">
             <label className="flex-none w-[100px]">Update:</label>
-            <p>{book.timestamp}</p>
+            <p><Date value={book.timestamp} /></p>
           </div>
         </div>
       </div>

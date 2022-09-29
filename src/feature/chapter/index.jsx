@@ -3,6 +3,7 @@ import Breadcrumbs from './Breadcrumbs';
 import Pagination from './Pagination';
 import Content from './Content';
 import Progress from './Progress';
+import Date from '../../shared/Date';
 
 function View() {
   const chapter = useLoaderData();
@@ -17,7 +18,7 @@ function View() {
       </main>
       <Pagination book={book} chapter={chapter} />
       <p className="mt-6 text-center text-base-content">
-        <i>Last update: {chapter.timestamp}</i>
+        <i>Last update: <Date value={chapter.timestamp} /></i>
       </p>
     </>
   )

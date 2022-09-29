@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { update } from '../../api/user/chapters';
 import chapters$ from '../../signal/user/chapters';
-import Icon from '../../shared/Icon';
-
-import eyeRawSvg from '../../assets/eye.svg?raw';
+import { ReactComponent as EyeIcon } from '../../assets/eye.svg';
 
 const ProgressBar = ({ saved }) => {
   if (!saved) return '';
@@ -29,7 +27,7 @@ const toggleReadState = (book, chapter, isUnread = false) => {
   };
   update(book.id, chapter.id, data).then(() => {
     chapters$.next({ [chapter.id]: data });
-  }).catch(() => {});
+  }).catch(() => { });
 }
 
 // readed, reading, unread
@@ -47,7 +45,7 @@ const ReadToggle = ({ book, chapter, saved }) => {
   `;
   return (
     <button className={css} onClick={() => toggleReadState(book, chapter, progress >= 100)}>
-      <Icon className="w-8 rounded-full" raw={eyeRawSvg} />
+      <EyeIcon className="w-8 rounded-full" />
     </button>
   );
 }

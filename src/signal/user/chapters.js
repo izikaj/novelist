@@ -7,6 +7,8 @@ export const data$ = state(entry, {});
 export const useData = () => useStateObservable(data$);
 export const setData = (value) => entry.next(value);
 
+// persisted connection to keep data in safe
+data$.subscribe();
 // data$.subscribe(d => {
 //   console.log('<<<<<<<< CHAPTERS', d);
 // });

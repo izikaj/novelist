@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Image from '../../shared/Image';
+import Date from '../../shared/Date';
 
 function Card({ book }) {
   const linking = {
@@ -25,7 +26,7 @@ function Card({ book }) {
           </h2>
           <p>
             Chapters: {book.chaptersCount}<br />
-            Update: {book.timestamp}
+            Update: <Date value={book.timestamp} />
           </p>
         </div>
       </div>
