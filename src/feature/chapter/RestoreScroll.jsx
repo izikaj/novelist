@@ -11,9 +11,11 @@ function RestoreScroll() {
       const h = document.scrollingElement.scrollHeight;
       const t = Math.floor(h * y * 0.01 - 50);
       scrollTo(0, t > 0 ? t : 0);
+    } else {
+      localStorage.setItem('scroll%P', location.pathname);
+      localStorage.setItem('scroll%Y', 0);
     }
 
-    localStorage.setItem('scroll%P', location.pathname);
     const sub = scroll$.subscribe((pos) => {
       if (pos > 0) localStorage.setItem('scroll%Y', pos);
     });

@@ -9,7 +9,6 @@ export const setLoading = (value) => entry.next(value);
 let ticker, last;
 
 function $tick() {
-  console.log('tick!');
   const next = last + (100 - last) * 0.1;
   entry.next(next);
 }
