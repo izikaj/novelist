@@ -13,7 +13,7 @@ const ProgressBar = ({ saved }) => {
 
   return (
     <div
-      className="chapter-progress bg-neutral absolute top-0 left-0 h-full"
+      className="bg-neutral-focus absolute top-0 left-0 h-full"
       style={style}
     />
   );

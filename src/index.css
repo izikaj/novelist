@@ -31,3 +31,7 @@
   position: absolute;
   transform: rotate(-45deg);
 }
+
+.loader-active {
+  transition: width ease 1s;
+}

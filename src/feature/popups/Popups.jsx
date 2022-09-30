@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import SignIn from '../auth/SignIn';
-import SignUp from '../auth/SignUp';
-import Remind from '../auth/Remind';
+import AuthSignIn from './AuthSignIn';
+import AuthSignUp from './AuthSignUp';
+import AuthRemind from './AuthRemind';
 import Settings from '../settings';
 import Alert from './Alert';
 import {
@@ -33,7 +33,6 @@ function Popups() {
   })
 
   const onClose = () => {
-    console.debug('ON CLOSE', popup);
     if (typeof popup.callback === 'function') popup.callback(popup);
     setPopup(null);
   }
@@ -50,15 +49,16 @@ function Popups() {
     case ALERT:
       return <Alert popup={popup} onClose={onClose} />;
     case SIGN_IN:
-      return <SignIn {...opts} />;
+      return <AuthSignIn {...opts} />;
     case SIGN_UP:
-      return <SignUp {...opts} />;
+      return <AuthSignUp {...opts} />;
     case REMIND:
-      return <Remind {...opts} />;
+      return <AuthRemind {...opts} />;
     case SETTINGS:
       return <Settings onClose={onClose} />;
   }
+
   return '';
 }
 
-export default Popups
+export default Popups;

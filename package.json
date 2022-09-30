@@ -14,6 +14,7 @@
   "dependencies": {
     "@react-rxjs/core": "^0.10.3",
     "@reactivex/rxjs": "^6.6.7",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "date-fns": "^2.29.3",
     "firebase": "^9.10.0",
     "localforage": "^1.10.0",

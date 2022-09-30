@@ -30,9 +30,9 @@ const updateTheme = (evt) => {
 const Item = ({ theme, value }) => {
   const isActive = theme === value;
   const css = `
-    min-w-[45%] md:min-w-[30%] flex-1 border-2
+    min-w-[45%] md:min-w-[30%] flex-1 border-2 bg-base-200
     rounded-md cursor-pointer overflow-hidden relative
-    ${isActive ? 'border-accent' : 'border-transparent'}
+    ${isActive ? 'border-primary-focus' : 'border-transparent'}
   `;
   return (
     <div onClick={updateTheme} className={css} data-value={theme}>
