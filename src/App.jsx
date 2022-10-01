@@ -19,18 +19,18 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: libraryLoader,
+        // loader: libraryLoader,
         element: <LibraryView />,
       },
       {
         path: '/:bookId',
-        loader: bookLoader,
+        // loader: bookLoader,
         element: <BookView />,
         errorElement: <NotFound type="book" />,
       },
       {
         path: '/:bookId/:chapterId',
-        loader: chapterLoader,
+        // loader: chapterLoader,
         element: <ChapterView />,
         errorElement: <NotFound type="chapter" />,
       },

@@ -2,7 +2,6 @@ import { show } from '../api/books';
 import { cached as cachedLibrary } from './library';
 import { setBook } from '../signal/book';
 import { setChapter } from '../signal/chapter';
-import { setLoading } from '../signal/loading';
 
 function fetchSingle(id) {
   return show(id).catch(() => { throw 'server error' });

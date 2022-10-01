@@ -2,9 +2,7 @@ import assetUrl from '../api/assetUrl';
 import isPresent from '../shared/isPresent';
 import { loader as bookLoader } from './book';
 import { show as getChapter } from '../api/chapters';
-// import { show as getProgress } from '../api/user/chapters';
 import { setChapter } from '../signal/chapter';
-import { setLoading } from '../signal/loading';
 
 const chIds = (book) => {
   return Object.keys(book.chapters).map(ch => parseInt(ch, 10)).sort(
@@ -33,11 +31,12 @@ async function replaceImageUrls(chapter) {
   chapter.content = chapter.content.replace(IMG_URL, (_, link) => `src="${mapping[link] || link}"`);
 }
 
-const sleep = (t) => new Promise((r) => setTimeout(r, t));
-
 async function $load({ params }) {
-  const book = await bookLoader({ params });
-  const chapter = await getChapter(book.id, params.chapterId);
+  const [book, chapter] = await Promise.all(
+    [bookLoader({ params }), getChapter(params.bookId, params.chapterId)]
+  );
+  // const book = await bookLoader({ params });
+  // const chapter = await getChapter(params.bookId, params.chapterId);
   if (!isPresent(chapter)) return;
 
   await replaceImageUrls(chapter).catch(() => { });

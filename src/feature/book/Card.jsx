@@ -11,10 +11,7 @@ function Card({book}) {
             className="object-cover object-center w-[100px] md:w-[150px] h-[160px] md:h-[220px]"
           />
         </figure>
-        <div
-          className="md:pt-4 md:pb-4 flex flex-col gap-2"
-          x-data="NovelForm" x-modelable="data" x-model="$store.novel"
-        >
+        <div className="md:pt-4 md:pb-4 flex flex-col gap-2">
           <h2 className="card-title md:mb-4">{book.title}</h2>
 
           <div className="flex">
