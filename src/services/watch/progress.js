@@ -1,13 +1,22 @@
 import { combineLatest, auditTime } from 'rxjs';
 import { chapter$ } from '../../signal/user/chapter';
 import { read$ } from '../../signal/progress';
-import { update } from '../../api/user/chapters';
+import { update as updateBook } from '../../api/user/books';
+import { update as updateChapter } from '../../api/user/chapters';
 
 const NS = ' -- WATCH:SYNC_PROGRESS -- ';
-const TIMEOUT = 3000;
+const TIMEOUT = 1000;
+
+const saveBookPage = (saved) => {
+  updateBook(saved.bookId, {
+    lastChapterId: saved.id,
+    lastChapterTitle: saved.title,
+  });
+}
 
 const commit = (saved) => {
-  return update(saved.bookId, saved.id, {
+  if (saved.$blank) saveBookPage(saved);
+  return updateChapter(saved.bookId, saved.id, {
     digest: saved.digest,
     progress: saved.progress,
     title: saved.title,
@@ -34,7 +43,7 @@ function $build() {
       if (saved.$blank) return commit(saved);
       if (read <= saved.progress) return;
 
-      console.log('UPDATE READ PROGRESS', read);
+      console.debug('UPDATE READ PROGRESS', read);
       saved.progress = read;
       return commit(saved);
     });

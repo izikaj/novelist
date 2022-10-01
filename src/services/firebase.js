@@ -30,6 +30,5 @@ export const storage = (window[STORE_NS] || (window[STORE_NS] = getStorage(app))
 if (location.hostname === 'localhost') {
   connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
   connectDatabaseEmulator(database, 'localhost', 9000, { disableWarnings: true });
-  connectStorageEmulator(storage, "localhost", 9199, { disableWarnings: true });
-  // disableWarnings: true
+  connectStorageEmulator(storage, 'localhost', 9199, { disableWarnings: true });
 }

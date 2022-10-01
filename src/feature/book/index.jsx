@@ -3,6 +3,7 @@ import Breadcrumbs from './Breadcrumbs';
 import Card from './Card';
 import Loading from './Loading';
 import ChaptersList from './ChaptersList';
+import ReadLink from './ReadLink';
 import Deferred from '../../shared/Deferred';
 import loader from '../../loaders/book';
 
@@ -14,6 +15,7 @@ function View() {
       <main className="md:container md:mx-auto mb-5 px-1 md:px-0">
         <Breadcrumbs book={book} />
         <Card book={book} />
+        <ReadLink book={book} />
         <ChaptersList book={book} />
       </main>
     </Deferred>

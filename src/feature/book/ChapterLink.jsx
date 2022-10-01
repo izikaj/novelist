@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { update } from '../../api/user/chapters';
 import chapters$ from '../../signal/user/chapters';
-import { ReactComponent as EyeIcon } from '../../assets/eye.svg';
+
+import { ReactComponent as EyeShowIcon } from '../../assets/eye-show.svg';
+import { ReactComponent as EyeHideIcon } from '../../assets/eye-hide.svg';
+import { ReactComponent as EyeTrackIcon } from '../../assets/eye-tracking.svg';
 
 const ProgressBar = ({ saved }) => {
   if (!saved) return '';
@@ -30,23 +33,20 @@ const toggleReadState = (book, chapter, isUnread = false) => {
   }).catch(() => { });
 }
 
-// readed, reading, unread
-const cssByProgress = (value = 0) => {
-  if (!value || value <= 0) return 'unread';
-  if (value >= 100) return 'readed';
-  return 'reading';
+const iconByProgress = (value) => {
+  if (!value || value <= 0) return EyeHideIcon;
+  if (value >= 100) return EyeShowIcon;
+  return EyeTrackIcon;
 }
 
 const ReadToggle = ({ book, chapter, saved }) => {
   const progress = saved && saved.progress || 0;
-  const css = `
-    relative inline-block h-4 w-4 b-0 flex-none read-toggle
-    ${cssByProgress(progress)}
-  `;
+  const Icon = iconByProgress(progress);
   return (
-    <button className={css} onClick={() => toggleReadState(book, chapter, progress >= 100)}>
-      <EyeIcon className="w-8 rounded-full" />
-    </button>
+    <button
+      className="relative inline-block h-4 w-4 b-0 flex-none read-toggle text-accent-focus"
+      onClick={() => toggleReadState(book, chapter, progress >= 100)}
+    ><Icon className="w-8 rounded-full" /></button>
   );
 }
 

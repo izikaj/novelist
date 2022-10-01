@@ -1,3 +1,4 @@
+import { noop } from 'underscore';
 import assetUrl from '../api/assetUrl';
 import isPresent from '../shared/isPresent';
 import { loader as bookLoader } from './book';
@@ -24,8 +25,8 @@ async function replaceImageUrls(chapter) {
   const links = new Set();
   chapter.content.replace(IMG_URL, (_, link) => links.add(link));
   const mapping = {};
-  await Promise.all(Array.from(links).map(src => {
-    return assetUrl(src).then((dst) => mapping[src] = dst).catch(() => { });
+  await Promise.all(Array.from(links).map((src) => {
+    return assetUrl(src).then((dst) => mapping[src] = dst).catch(noop);
   }));
 
   chapter.content = chapter.content.replace(IMG_URL, (_, link) => `src="${mapping[link] || link}"`);
@@ -35,11 +36,9 @@ async function $load({ params }) {
   const [book, chapter] = await Promise.all(
     [bookLoader({ params }), getChapter(params.bookId, params.chapterId)]
   );
-  // const book = await bookLoader({ params });
-  // const chapter = await getChapter(params.bookId, params.chapterId);
   if (!isPresent(chapter)) return;
 
-  await replaceImageUrls(chapter).catch(() => { });
+  await replaceImageUrls(chapter).catch(noop);
   await fillPrevNext(book, chapter).catch((e) => console.warn('fillPrevNext ERROR:', e));
 
   chapter.book = book;

@@ -9,29 +9,6 @@
   align-items: center;
 }
 
-.read-toggle.readed {
-  color: hsl(var(--bc));
-}
-
-.read-toggle.reading {
-  color: hsl(var(--p));
-}
-
-.read-toggle.unread {
-  color: hsl(var(--a));
-}
-
-.read-toggle.unread:before {
-  content: "";
-  display: block;
-  width: 1rem;
-  height: 0.125rem;
-  border-radius: 0.0625rem;
-  background-color: hsl(var(--a));
-  position: absolute;
-  transform: rotate(-45deg);
-}
-
 .loader-active {
   transition: width ease 1s;
 }

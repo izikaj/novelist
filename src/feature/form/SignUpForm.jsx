@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import signUp from '../../api/auth/signUp';
-import FieldError from './FieldError';
 import { ShowAlert } from '../../signal/popup';
+import signUp from '../../api/auth/signUp';
+import AuthWithGoogle from './AuthWithGoogle';
+import FieldError from './FieldError';
+import PasswordInput from './PasswordInput';
 
 function SignUpForm({ toSignIn }) {
   const [errors, setErrors] = useState({});
@@ -43,8 +45,7 @@ function SignUpForm({ toSignIn }) {
         <div className="form-control">
           <label className="input-group input-group-sm">
             <span className="flex-none w-2/5 justify-end">Password</span>
-            <input
-              type="password"
+            <PasswordInput
               name="password"
               autoComplete="new-password"
               className="flex-none w-3/5 input input-sm input-bordered"
@@ -55,8 +56,7 @@ function SignUpForm({ toSignIn }) {
         <div className="form-control">
           <label className="input-group input-group-sm">
             <span className="flex-none w-2/5 justify-end">Confirm</span>
-            <input
-              type="password"
+            <PasswordInput
               name="confirmation"
               autoComplete="new-password"
               className="flex-none w-3/5 input input-sm input-bordered"
@@ -65,11 +65,19 @@ function SignUpForm({ toSignIn }) {
           <FieldError message={errors.confirmation} />
         </div>
       </div>
-      <div className="flex gap-2 mt-4">
-        <button onClick={toSignIn} type="button" className="btn-link btn-sm flex-1 text-base-content text-left p-0">Back to login</button>
+      <div className="flex gap-2 mt-4 justify-end">
         <button
           type="submit" className="btn btn-sm btn-success"
-        >Sign In</button>
+        >Send</button>
+      </div>
+
+      <div className="flex gap-2 mt-6 items-center justify-between">
+        <button
+          className="btn-link btn-sm text-accent text-left p-0"
+          onClick={toSignIn} type="button" children="Back to login"
+        />
+
+        <AuthWithGoogle />
       </div>
     </form>
   )

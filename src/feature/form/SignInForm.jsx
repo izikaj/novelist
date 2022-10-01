@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import signIn from '../../api/auth/signIn';
 import FieldError from './FieldError';
+import AuthWithGoogle from './AuthWithGoogle';
+import PasswordInput from './PasswordInput';
 
-function LogInForm({ toRemind }) {
+function LogInForm({ toRemind, toSignUp }) {
   const [errors, setErrors] = useState({});
   const login = (evt) => {
     evt.preventDefault();
@@ -38,8 +40,7 @@ function LogInForm({ toRemind }) {
         <div className="form-control">
           <label className="input-group input-group-sm">
             <span className="flex-none w-2/5 justify-end">Password</span>
-            <input
-              type="password"
+            <PasswordInput
               name="password"
               autoComplete="current-password"
               className="flex-none w-3/5 input input-sm input-bordered"
@@ -52,7 +53,16 @@ function LogInForm({ toRemind }) {
         <button onClick={toRemind} type="button" className="btn-link btn-sm flex-1 text-base-content text-left p-0">Forgot password?</button>
         <button
           type="submit" className="btn btn-sm btn-success"
-        >Sign In</button>
+        >Send</button>
+      </div>
+
+      <div className="flex gap-2 mt-6 items-center justify-between">
+        <button
+          className="btn-link btn-sm text-accent text-left p-0"
+          type="button" onClick={toSignUp} children="Sign Up"
+        />
+
+        <AuthWithGoogle />
       </div>
     </form>
   )
