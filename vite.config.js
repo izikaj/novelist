@@ -14,10 +14,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: [
-            'react', 'react-router-dom', 'react-dom', 'rxjs',
-            'date-fns', 'underscore',
-          ],
+          react: ['react', 'react-router-dom', 'react-dom'],
+          vendor: ['rxjs', 'date-fns', 'underscore'],
+          firebase1: ['firebase/database'],
+          firebase2: ['firebase/auth', 'firebase/storage'],
         },
       },
     },
