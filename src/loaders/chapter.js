@@ -32,6 +32,16 @@ async function replaceImageUrls(chapter) {
   chapter.content = chapter.content.replace(IMG_URL, (_, link) => `src="${mapping[link] || link}"`);
 }
 
+const HTML_TABLE = /\<\s*table.*?\<\/\s*table\s*\>/ig;
+async function wrapTables(chapter) {
+  if (!HTML_TABLE.test(chapter.content)) return;
+
+  chapter.content = chapter.content.replace(
+    HTML_TABLE,
+    (table) => `<div class="taable-wrap w-full max-w-full overflow-x-auto">${table}</div>`
+  );
+}
+
 async function $load({ params }) {
   const [book, chapter] = await Promise.all(
     [bookLoader({ params }), getChapter(params.bookId, params.chapterId)]
@@ -39,6 +49,7 @@ async function $load({ params }) {
   if (!isPresent(chapter)) return;
 
   await replaceImageUrls(chapter).catch(noop);
+  await wrapTables(chapter).catch(noop);
   await fillPrevNext(book, chapter).catch((e) => console.warn('fillPrevNext ERROR:', e));
 
   chapter.book = book;

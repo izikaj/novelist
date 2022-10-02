@@ -16,6 +16,7 @@ function Content({ chapter }) {
         className="max-w-[98vw]"
         dangerouslySetInnerHTML={{ __html: chapter.content }}
       />
+
       <RestoreScroll />
     </article>
   );

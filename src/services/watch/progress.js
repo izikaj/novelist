@@ -7,15 +7,7 @@ import { update as updateChapter } from '../../api/user/chapters';
 const NS = ' -- WATCH:SYNC_PROGRESS -- ';
 const TIMEOUT = 1000;
 
-const saveBookPage = (saved) => {
-  updateBook(saved.bookId, {
-    lastChapterId: saved.id,
-    lastChapterTitle: saved.title,
-  });
-}
-
 const commit = (saved) => {
-  if (saved.$blank) saveBookPage(saved);
   return updateChapter(saved.bookId, saved.id, {
     digest: saved.digest,
     progress: saved.progress,

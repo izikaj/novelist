@@ -19,6 +19,7 @@ const ToFirstChapter = ({ book }) => {
   return (
     <Link
       to={`/${book.id}/${chapter.id}`}
+      state={{ position: 'top' }}
       children={chapter.title}
     />
   );

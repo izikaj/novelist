@@ -12,3 +12,8 @@
 .loader-active {
   transition: width ease 1s;
 }
+
+article img {
+  max-width: 100%;
+  height: auto;
+}

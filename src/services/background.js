@@ -6,6 +6,7 @@ import watchChapter from './watch/chapter';
 import watchScroll from './watch/scroll';
 import watchProgress from './watch/progress';
 import watchSettings from './watch/settings';
+import watchLastChapter from './watch/lastChapter';
 
 const BG_NS = ' -- BACKGROUND -- ';
 
@@ -18,6 +19,7 @@ function $start() {
   watchScroll();
   watchProgress();
   watchSettings();
+  watchLastChapter();
 
   return this;
 }
