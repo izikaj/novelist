@@ -1,7 +1,7 @@
 import { combineLatest, auditTime } from 'rxjs';
 import { chapter$ } from '../../signal/user/chapter';
 import { read$ } from '../../signal/progress';
-import { update as updateBook } from '../../api/user/books';
+// import { update as updateBook } from '../../api/user/books';
 import { update as updateChapter } from '../../api/user/chapters';
 
 const NS = ' -- WATCH:SYNC_PROGRESS -- ';

@@ -1,16 +1,28 @@
 import scrollSnap from '../scrollSnap';
 import { chapter$ } from '../../signal/chapter';
 import { setNavbar, navbar$ } from '../../signal/navbar';
-import { scroll$, read$ } from '../../signal/progress';
+import { scroll$, reset } from '../../signal/progress';
 
 const NS = ' -- WATCH:SCROLL -- ';
+
+function $$collapseNavbar(nav) {
+  const ref = document.getElementById('topBar');
+  if (ref.matches(':focus-within')) {
+    // move focus to outside
+    document.querySelector('main a, main button').focus();
+  }
+  setNavbar({ ...nav, collapse: true });
+}
+
+function $$expandNavbar(nav) {
+  setNavbar({ ...nav, collapse: false });
+}
 
 function navCollapseLogic(nav, evt) {
   scroll$.next(Math.round(100 * evt.y / evt.height));
 
-  if (nav.collapse && evt.y < 60) return setNavbar({ ...nav, collapse: false });
-  if (nav.collapse && evt.dy < -60) return setNavbar({ ...nav, collapse: false });
-  if (!nav.collapse && evt.dy > 60) return setNavbar({ ...nav, collapse: true });
+  if (!nav.collapse && evt.dy > 60) return $$collapseNavbar(nav);
+  if (nav.collapse && (evt.y < 60 || evt.dy < -60)) return $$expandNavbar(nav);
 }
 
 function $build() {
@@ -33,8 +45,7 @@ function $build() {
     window.removeEventListener('scroll', scroller);
     if (unsub) unsub.unsubscribe();
     unsub = undefined;
-    scroll$.next(0);
-    read$.next(0);
+    reset();
   }
 
   function $subscribe(chapter) {

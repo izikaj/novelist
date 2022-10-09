@@ -10,11 +10,10 @@ function NavBar() {
   }
   return (
     <>
-      <div className="navbar opacity-0"></div>
-      <div
+      <div id="topBarSpace" className="navbar opacity-0"></div>
+      <div id="topBar" style={styles}
         className="navbar bg-base-100 fixed shadow shadow-neutral-focus
                    top-0 right-0 z-10 transition-transform"
-        style={styles}
       >
         <div className="flex-1">
           <Auth />

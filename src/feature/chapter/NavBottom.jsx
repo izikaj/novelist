@@ -9,18 +9,18 @@ const commitChapter = (book, chapter) => {
   });
 }
 
-const LintToTop = ({ book, chapter, ...tail }) => {
-  if (!chapter) return '';
+const LintToTop = ({ book, chapter, target, ...tail }) => {
+  if (!target) return '';
 
   const params = {
     rel: 'prev',
-    to: `/${book.id}/${chapter.id}`,
+    to: `/${book.id}/${target.id}`,
     state: { position: 'top' },
     onClick: () => commitChapter(book, chapter),
     children: (
       <>
         <span className="font-thin">Next chapter ▶</span>
-        <span className="font-medium mt-2">{chapter.title}</span>
+        <span className="font-medium mt-2">{target.title}</span>
       </>
     ),
     ...tail
@@ -34,7 +34,8 @@ function TopNavigation({ book, chapter }) {
     <section className="my-8">
       <LintToTop
         book={book}
-        chapter={chapter.next}
+        chapter={chapter}
+        target={chapter.next}
         className="btn btn-outline flex flex-col flex-1 max-w-full h-auto py-2 normal-case"
       />
     </section>
