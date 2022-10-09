@@ -23,6 +23,7 @@ function $build() {
       theme: quesTheme(),
       fontSize: 120,
       lineSpacing: 150,
+      fontFamily: '',
     });
   });
 
@@ -44,6 +45,8 @@ function $build() {
       }),
       filteredBy('fontSize').subscribe(),
       filteredBy('lineSpacing').subscribe(),
+      filteredBy('lineSpacing').subscribe(),
+      filteredBy('fontFamily').subscribe(),
     ];
   }
 

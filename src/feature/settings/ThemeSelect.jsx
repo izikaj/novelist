@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { setData, useKeyData } from '../../signal/user/settings'
 import { ReactComponent as BookmarkIcon } from '../../assets/bookmark.svg';
 
@@ -32,18 +33,18 @@ const Item = ({ theme, value }) => {
   const css = `
     min-w-[45%] md:min-w-[30%] flex-1 border-2 bg-base-200
     rounded-md cursor-pointer overflow-hidden relative
-    ${isActive ? 'border-primary-focus' : 'border-transparent'}
+    ${isActive ? 'border-success active' : 'border-transparent'}
   `;
   return (
     <div onClick={updateTheme} className={css} data-value={theme}>
-      {isActive ? <BookmarkIcon className="absolute top-[-5px] left-2 w-4" /> : ''}
+      {isActive ? <BookmarkIcon className="absolute top-[-5px] right-2 w-4 text-success" /> : ''}
       <div
         className="bg-base-100 text-base-content hover:bg-base-200 flex-1 font-sans pointer-events-none"
         data-theme={theme}
       >
         <div className="col-span-5 row-span-3 row-start-1 flex gap-1 py-3 px-2 md:px-4">
-          <div className="theme-label flex-grow text-sm font-bold">{theme}</div>
           {Palette}
+          <div className="theme-label flex-grow text-sm font-bold">{theme}</div>
         </div>
       </div>
     </div >
@@ -57,9 +58,17 @@ const List = ({ value }) => THEMES.map((theme) => {
 function ThemeSelect() {
   const theme = useKeyData('theme', 'dark');
 
+  const ref = useRef(null);
+  useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+    const active = root.querySelector('.active');
+    if (active) active.scrollIntoView({ block: 'center' });
+  }, []);
+
   return (
     <>
-      <div className="
+      <div ref={ref} className="
         flex flex-wrap gap-2 mt-4 mx-[-14px] px-[14px] justify-around
         max-h-[calc(100vh/3)] md:max-h-[calc(100vh/2)] overflow-y-auto"
       ><List value={theme} /></div >

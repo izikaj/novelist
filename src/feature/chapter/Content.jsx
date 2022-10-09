@@ -6,6 +6,7 @@ function Content({ chapter }) {
   const style = {
     fontSize: `${opts.fontSize}%`,
     lineHeight: `${opts.lineSpacing}%`,
+    fontFamily: opts.fontFamily,
   };
 
   return (

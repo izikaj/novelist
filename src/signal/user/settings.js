@@ -27,4 +27,8 @@ export const useKeyData = (key, initial) => {
   return useStateObservable(filteredBy(key, initial));
 }
 
+// entry.subscribe(v => {
+//   console.log('<<<<< ', v);
+// });
+
 export default entry;
