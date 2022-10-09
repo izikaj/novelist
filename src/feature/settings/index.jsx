@@ -3,7 +3,7 @@ import PopupWithOverlay from '../popups/PopupWithOverlay';
 
 function Settings({ onClose }) {
   return (
-    <PopupWithOverlay onClose={onClose}>
+    <PopupWithOverlay onClose={onClose} boxCss="pb-0 md:pb-4">
       <Panel />
     </PopupWithOverlay>
   )

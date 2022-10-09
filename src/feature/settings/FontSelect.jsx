@@ -84,7 +84,7 @@ function FontSelect() {
   return (
     <>
       <div ref={ref} className="
-        flex flex-wrap gap-2 mt-4 mx-[-14px] px-[14px]
+        flex flex-wrap gap-2 py-4 md:pb-0 mx-[-14px] px-[14px]
         max-h-[calc(100vh/3)] md:max-h-[calc(100vh/2)] overflow-y-auto"
       >
         <ItemsList available={available} list={list} value={value} />

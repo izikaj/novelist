@@ -5,7 +5,7 @@ import LineSpacing from './parts/LineSpacing'
 function TextOptions() {
   return (
     <>
-      <div className="flex flex-col gap-2 mt-4">
+      <div className="flex flex-col gap-2 py-4 md:pb-0">
         <div className="form-control">
           <FontSize />
         </div>

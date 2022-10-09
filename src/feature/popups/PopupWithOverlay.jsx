@@ -12,7 +12,7 @@ const BackDrop = ({ onClose, closeable }) => {
   );
 }
 
-function PopupWithOverlay({ onClose, children, hideOnClickOutside = true }) {
+function PopupWithOverlay({ onClose, children, hideOnClickOutside = true, boxCss = '' }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function PopupWithOverlay({ onClose, children, hideOnClickOutside = true }) {
   return (
     <div className="modal modal-bottom sm:modal-middle modal-open">
       <BackDrop onClose={onClose} closeable={hideOnClickOutside} />
-      <div className="modal-box relative" ref={ref}>
+      <div className={`modal-box relative ${boxCss}`} ref={ref}>
         <button
           type="button"
           className="btn btn-sm btn-circle absolute right-2 top-2"
