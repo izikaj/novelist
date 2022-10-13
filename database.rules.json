@@ -36,11 +36,11 @@
     },
     "books": {
       ".read": "true",
-      ".write": "root.child('role').child(auth.uid).val() === 'admin'"
+      ".write": "auth.uid === 'sync-worker' || root.child('role').child(auth.uid).val() === 'admin'"
     },
     "chapters": {
       ".read": "true",
-      ".write": "root.child('role').child(auth.uid).val() === 'admin'"
+      ".write": "auth.uid === 'sync-worker' || root.child('role').child(auth.uid).val() === 'admin'"
     },
     "role": {
       ".read": "root.child('role').child(auth.uid).val() === 'admin'",

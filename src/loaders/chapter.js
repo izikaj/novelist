@@ -18,7 +18,7 @@ async function fillPrevNext(book, chapter) {
   chapter.next = book.chapters[ids[pos + 1]];
 }
 
-const IMG_URL = /src="(\/data\/novels\/.+?)"/g;
+const IMG_URL = /src="(\/data\/.+?)"/g;
 async function replaceImageUrls(chapter) {
   if (!IMG_URL.test(chapter.content)) return;
 
