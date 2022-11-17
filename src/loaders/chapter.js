@@ -4,6 +4,7 @@ import isPresent from '../shared/isPresent';
 import { loader as bookLoader } from './book';
 import { show as getChapter } from '../api/chapters';
 import { setChapter } from '../signal/chapter';
+import { setLoading } from '../signal/loading';
 
 const chIds = (book) => {
   return Object.keys(book.chapters).map(ch => parseInt(ch, 10)).sort(
@@ -42,7 +43,10 @@ async function wrapTables(chapter) {
   );
 }
 
+const later = (t = 100) => new Promise((d) => setTimeout(d, t))
+
 async function $load({ params }) {
+  setLoading(0);
   const [book, chapter] = await Promise.all(
     [bookLoader({ params }), getChapter(params.bookId, params.chapterId)]
   );
@@ -54,6 +58,9 @@ async function $load({ params }) {
 
   chapter.book = book;
   setChapter(chapter);
+
+  // await later(3000);
+  setLoading(100);
 
   return chapter;
 }

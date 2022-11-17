@@ -1,5 +1,6 @@
 import { useData } from '../../signal/user/settings';
 import RestoreScroll from './RestoreScroll';
+import ScrollTop from '../../shared/ScrollTop';
 
 function Content({ chapter }) {
   const opts = useData();

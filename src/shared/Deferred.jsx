@@ -8,13 +8,12 @@ const Deferred = ({ children, loader, setData, fallback }) => {
 
   useEffect(() => {
     let canceled = false;
+    setReady(false);
     setTimeout(() => {
       Promise.resolve(loader({ params })).then(raw => {
         if (canceled) return;
         setData(raw);
-        setTimeout(() => {
-          setReady(true);
-        }, 10);
+        setTimeout(() => setReady(true), 10);
       });
     }, 10);
 

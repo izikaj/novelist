@@ -2,6 +2,7 @@ import { show } from '../api/books';
 import { cached as cachedLibrary } from './library';
 import { setBook } from '../signal/book';
 import { setChapter } from '../signal/chapter';
+import { setLoading } from '../signal/loading';
 
 function fetchSingle(id) {
   return show(id).catch(() => { throw 'server error' });
@@ -24,6 +25,13 @@ export async function loader({ params }) {
 }
 
 export default (opts) => {
+  setLoading(0);
   setChapter(null);
-  return loader(opts);
+  return loader(opts).then((d) => {
+    setLoading(100);
+    return d;
+  }).catch((e) => {
+    setLoading(100);
+    throw e;
+  });
 }

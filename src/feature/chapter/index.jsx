@@ -21,9 +21,8 @@ function View() {
         <Breadcrumbs book={book} chapter={chapter} />
         <NavTop book={book} chapter={chapter} />
         <Content book={book} chapter={chapter} />
+        <NavBottom book={book} chapter={chapter} />
       </main>
-
-      <NavBottom book={book} chapter={chapter} />
 
       <Metadata chapter={chapter}/>
     </Deferred>
